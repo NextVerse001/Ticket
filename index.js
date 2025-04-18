@@ -2,6 +2,7 @@ require('dotenv').config();
 const fs = require('fs');
 const { Client, Collection, Intents } = require('discord.js');
 const chalk = require('chalk');
+const express = require('express');  // Import Express
 const config = require('./config.json');
 
 // Create a new Discord client
@@ -72,3 +73,15 @@ if (!process.env.DISCORD_TOKEN) {
 
 // Log in to Discord using the token
 client.login(process.env.DISCORD_TOKEN);
+
+// Set up a basic Express web server to listen on the assigned Render port
+const app = express();
+const port = process.env.PORT || 3000;  // Default to 3000 if no port is set
+
+app.get('/', (req, res) => {
+  res.send('Your Discord bot is running!');
+});
+
+app.listen(port, () => {
+  console.log(`Web server running on port ${port}`);
+});
